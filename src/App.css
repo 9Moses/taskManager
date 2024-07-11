@@ -8,3 +8,15 @@ body,
   @apply bg-slate-100 text-white box-border;
   font-family: "DM Sans", sans-serif;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-700 rounded-xl;
+}
