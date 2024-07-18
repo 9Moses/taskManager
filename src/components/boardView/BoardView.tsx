@@ -45,6 +45,9 @@ export const BoardView = () => {
                   deleteCol={deleteCol}
                   updateColum={updateColum}
                   createTask={createTask}
+                  deleteTask={deleteTask}
+                  task={task.filter((tasks) => tasks.columnId === col.id)}
+                  updateTask={updateTask}
                 />
               ))}
             </SortableContext>
@@ -65,6 +68,11 @@ export const BoardView = () => {
                 deleteCol={deleteCol}
                 updateColum={updateColum}
                 createTask={createTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+                task={task.filter(
+                  (tasks) => tasks.columnId === activeColumn.id
+                )}
               />
             )}
           </DragOverlay>,
@@ -102,6 +110,20 @@ export const BoardView = () => {
       content: `Task ${task.length + 1}`,
     };
     setTask([...task, newTask]);
+  }
+
+  function deleteTask(id: Id) {
+    const newTask = task.filter((tasks) => tasks.id !== id);
+    setTask(newTask);
+  }
+
+  function updateTask(id: Id, content: string) {
+    const newTasks = task.map((tasks) => {
+      if (tasks.id !== id) return tasks;
+      return { ...tasks, content };
+    });
+
+    setTask(newTasks);
   }
 
   function onDragStart(event: DragStartEvent) {

@@ -1,18 +1,30 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { Column, Id } from "../../Types/types";
+import { Column, Id, Task } from "../../Types/types";
 import { DeleteIcon, PlusIcon } from "../../icons";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+import TaskCard from "../taskCard/TaskCard";
 
 interface Props {
   columns: Column;
   deleteCol: (id: Id) => void;
   updateColum: (id: Id, title: string) => void;
   createTask: (columnId: Id) => void;
+  deleteTask: (id: Id) => void;
+  updateTask: (id: Id, content: string) => void;
+  task: Task[];
 }
 
 export default function ColContainer(props: Props) {
-  const { columns, deleteCol, updateColum, createTask } = props;
+  const {
+    columns,
+    deleteCol,
+    updateColum,
+    createTask,
+    task,
+    deleteTask,
+    updateTask,
+  } = props;
   const [editMode, setEditMode] = useState(false);
 
   const {
@@ -84,7 +96,16 @@ export default function ColContainer(props: Props) {
           <DeleteIcon />
         </button>
       </div>
-      <div className="flex flex-grow">Content</div>
+      <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
+        {task.map((tasks) => (
+          <TaskCard
+            key={tasks.id}
+            tasks={tasks}
+            deleteTask={deleteTask}
+            updateTask={updateTask}
+          />
+        ))}
+      </div>
       <button
         className="flex gap-2 items-center border-columnBackgroundColor border-2
        rounded-md p-4 border-x-columnBackgroundColor 
